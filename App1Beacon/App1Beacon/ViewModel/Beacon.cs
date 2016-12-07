@@ -3,36 +3,42 @@ using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 
-namespace App1Beacon.ViewModel {
+namespace App1Beacon.ViewModel
+{
 
-	public class Beacon {
-		public Beacon() {
-			Data = new List<Model.Beacon>();
-		}
+    public class Beacon
+    {
+        public Beacon ()
+        {
+            Data = new List<Model.Beacon> ();
+        }
 
-		public event EventHandler ListChanged;
+        public event EventHandler ListChanged;
 
-		public List<Model.Beacon> Data { get; set; }
+        public List<Model.Beacon> Data { get; set; }
 
-		public void Init() {
-			var beaconService = DependencyService.Get<IAltBeaconService>();
-			beaconService.ListChanged += (sender, e) => {
-				Data = e.Data;
-				OnListChanged();
-			};
-			beaconService.DataClearing += (sender, e) => {
-				Data.Clear();
-				OnListChanged();
-			};
+        public void Init ()
+        {
+            return;
+            var beaconService = DependencyService.Get<IAltBeaconService> ();
+            beaconService.ListChanged += (sender, e) => {
+                Data = e.Data;
+                OnListChanged ();
+            };
+            beaconService.DataClearing += (sender, e) => {
+                Data.Clear ();
+                OnListChanged ();
+            };
 
-			beaconService.InitializeService();
-		}
+            beaconService.InitializeService ();
+        }
 
-		private void OnListChanged() {
-			var handler = ListChanged;
-			if(handler != null) {
-				handler(this, EventArgs.Empty);
-			}
-		}
-	}
+        private void OnListChanged ()
+        {
+            var handler = ListChanged;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+    }
 }
